@@ -65,23 +65,24 @@ remove(pmltest,pmltrain,pmltrain_minNA_noID,pmltrain_minNA,namesNAmin,inTrain,po
 
 ## Building the model
 
-We built three models using the train() function and will evaluate which one is the best based on the accuracy of the validation set. The three models are: 
+We built three models using the train() function and will evaluate which one is the best based on the accuracy of the validation set. For each model, we use a three-fold cross-validation. The three models are: 
 
 i) random forest ("rf"),
 ```{r, cache=TRUE, results="hide"}
 set.seed(861)
-rf_Model = train(classe~., data=pmltrain_clean, method="rf")
+crossvalidation <- trainControl(method="cv",number = 3)
+rf_Model = train(classe~., data=pmltrain_clean, method="rf", trControl=crossvalidation)
 ```
 
 ii) boosted trees ("gbm"), and
 ```{r, cache=TRUE, results="hide"}
-gbm_Model = train(classe~., data=pmltrain_clean, method="gbm")
+gbm_Model = train(classe~., data=pmltrain_clean, method="gbm", trControl=crossvalidation)
 ```
 
 iii) linear discriminant analysis ("lda"). 
 
 ```{r, cache=TRUE, results="hide"}
-lda_Model = train(classe~., data=pmltrain_clean, method="lda")
+lda_Model = train(classe~., data=pmltrain_clean, method="lda", trControl=crossvalidation)
 ```
 
 ## Validating the model

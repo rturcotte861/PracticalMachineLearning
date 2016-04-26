@@ -63,26 +63,27 @@ remove(pmltest,pmltrain,pmltrain_minNA_noID,pmltrain_minNA,namesNAmin,inTrain,po
 
 ## Building the model
 
-We built three models using the train() function and will evaluate which one is the best based on the accuracy of the validation set. The three models are: 
+We built three models using the train() function and will evaluate which one is the best based on the accuracy of the validation set. For each model, we use a three-fold cross-validation. The three models are: 
 
 i) random forest ("rf"),
 
 ```r
 set.seed(861)
-rf_Model = train(classe~., data=pmltrain_clean, method="rf")
+crossvalidation <- trainControl(method="cv",number = 3)
+rf_Model = train(classe~., data=pmltrain_clean, method="rf", trControl=crossvalidation)
 ```
 
 ii) boosted trees ("gbm"), and
 
 ```r
-gbm_Model = train(classe~., data=pmltrain_clean, method="gbm")
+gbm_Model = train(classe~., data=pmltrain_clean, method="gbm", trControl=crossvalidation)
 ```
 
 iii) linear discriminant analysis ("lda"). 
 
 
 ```r
-lda_Model = train(classe~., data=pmltrain_clean, method="lda")
+lda_Model = train(classe~., data=pmltrain_clean, method="lda", trControl=crossvalidation)
 ```
 
 ## Validating the model
@@ -103,7 +104,7 @@ c(rfAcc, gbmAcc, ldaAcc)
 
 ```
 ##  Accuracy  Accuracy  Accuracy 
-## 0.9955391 0.9882743 0.7190925
+## 0.9955391 0.9875096 0.7190925
 ```
 
 ```r
@@ -131,14 +132,14 @@ bestModel
 ##     5 classes: 'A', 'B', 'C', 'D', 'E' 
 ## 
 ## No pre-processing
-## Resampling: Bootstrapped (25 reps) 
-## Summary of sample sizes: 11776, 11776, 11776, 11776, 11776, 11776, ... 
+## Resampling: Cross-Validated (3 fold) 
+## Summary of sample sizes: 7852, 7850, 7850 
 ## Resampling results across tuning parameters:
 ## 
 ##   mtry  Accuracy   Kappa    
-##    2    0.9904944  0.9879689
-##   27    0.9951897  0.9939128
-##   53    0.9919450  0.9898049
+##    2    0.9908285  0.9883978
+##   27    0.9943104  0.9928030
+##   53    0.9919325  0.9897951
 ## 
 ## Accuracy was used to select the optimal model using  the largest value.
 ## The final value used for the model was mtry = 27.

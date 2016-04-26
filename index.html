@@ -157,20 +157,21 @@ remove(pmltest,pmltrain,pmltrain_minNA_noID,pmltrain_minNA,namesNAmin,inTrain,po
 </div>
 <div id="building-the-model" class="section level2">
 <h2>Building the model</h2>
-<p>We built three models using the train() function and will evaluate which one is the best based on the accuracy of the validation set. The three models are:</p>
+<p>We built three models using the train() function and will evaluate which one is the best based on the accuracy of the validation set. For each model, we use a three-fold cross-validation. The three models are:</p>
 <ol style="list-style-type: lower-roman">
 <li>random forest (“rf”),</li>
 </ol>
 <pre class="r"><code>set.seed(861)
-rf_Model = train(classe~., data=pmltrain_clean, method=&quot;rf&quot;)</code></pre>
+crossvalidation &lt;- trainControl(method=&quot;cv&quot;,number = 3)
+rf_Model = train(classe~., data=pmltrain_clean, method=&quot;rf&quot;, trControl=crossvalidation)</code></pre>
 <ol start="2" style="list-style-type: lower-roman">
 <li>boosted trees (“gbm”), and</li>
 </ol>
-<pre class="r"><code>gbm_Model = train(classe~., data=pmltrain_clean, method=&quot;gbm&quot;)</code></pre>
+<pre class="r"><code>gbm_Model = train(classe~., data=pmltrain_clean, method=&quot;gbm&quot;, trControl=crossvalidation)</code></pre>
 <ol start="3" style="list-style-type: lower-roman">
 <li>linear discriminant analysis (“lda”).</li>
 </ol>
-<pre class="r"><code>lda_Model = train(classe~., data=pmltrain_clean, method=&quot;lda&quot;)</code></pre>
+<pre class="r"><code>lda_Model = train(classe~., data=pmltrain_clean, method=&quot;lda&quot;, trControl=crossvalidation)</code></pre>
 </div>
 <div id="validating-the-model" class="section level2">
 <h2>Validating the model</h2>
@@ -184,7 +185,7 @@ gbmAcc &lt;- confusionMatrix(pmltrain_crossvalid$classe, gbm_Results)$overall['A
 ldaAcc &lt;- confusionMatrix(pmltrain_crossvalid$classe, lda_Results)$overall['Accuracy']
 c(rfAcc, gbmAcc, ldaAcc)</code></pre>
 <pre><code>##  Accuracy  Accuracy  Accuracy 
-## 0.9955391 0.9882743 0.7190925</code></pre>
+## 0.9955391 0.9875096 0.7190925</code></pre>
 <pre class="r"><code>outOfSampleError &lt;- 1-sum(rf_Results == pmltrain_crossvalid$classe)/length(rf_Results)
 outOfSampleError</code></pre>
 <pre><code>## [1] 0.004460872</code></pre>
@@ -198,14 +199,14 @@ bestModel</code></pre>
 ##     5 classes: 'A', 'B', 'C', 'D', 'E' 
 ## 
 ## No pre-processing
-## Resampling: Bootstrapped (25 reps) 
-## Summary of sample sizes: 11776, 11776, 11776, 11776, 11776, 11776, ... 
+## Resampling: Cross-Validated (3 fold) 
+## Summary of sample sizes: 7852, 7850, 7850 
 ## Resampling results across tuning parameters:
 ## 
 ##   mtry  Accuracy   Kappa    
-##    2    0.9904944  0.9879689
-##   27    0.9951897  0.9939128
-##   53    0.9919450  0.9898049
+##    2    0.9908285  0.9883978
+##   27    0.9943104  0.9928030
+##   53    0.9919325  0.9897951
 ## 
 ## Accuracy was used to select the optimal model using  the largest value.
 ## The final value used for the model was mtry = 27.</code></pre>

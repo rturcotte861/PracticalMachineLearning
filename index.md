@@ -88,7 +88,7 @@ lda_Model = train(classe~., data=pmltrain_clean, method="lda", trControl=crossva
 
 ## Validating the model
 
-We perfom a cross validation and simultaneously estimate the out of sample error rate using the validation set that was previously created. We will use the accuracy of the validation set to select the best model.
+We perfom a validation and simultaneously estimate the out of sample error rate using the validation set that was previously created. We will use the accuracy of the validation set to select the best model.
 
 
 ```r
@@ -116,7 +116,7 @@ outOfSampleError
 ## [1] 0.004460872
 ```
 
-The cross-validation accuracy for the random forest model is the largest: 99.554. The random forest model is of particular interest because it is not sensitive to the interactions between variables which are unknown in this case. They likely exist as all sensors are attached to one human body. It can also handle variables that are unscaled; we didn't rescale the data because we didn't the composition/distribution of the 54 remaining variables after cleaning the data. The out-of-sample error was calculated to be of 0.446%, which is simply 1-accurary for a random forest model as this model provide an unbiased estimate of the out-of-sample error. The best model is therefore a random forest model.
+The validation set accuracy for the random forest model is the largest: 99.554. The random forest model is of particular interest because it is not sensitive to the interactions between variables which are unknown in this case. They likely exist as all sensors are attached to one human body. It can also handle variables that are unscaled; we didn't rescale the data because we didn't know the composition/distribution of the 54 remaining variables after cleaning the data. In a more indepth study, interactionss and distribtion could be assessed. The out-of-sample error was calculated to be of 0.446%, which is simply 1-accurary for a random forest model as this model provide an unbiased estimate of the out-of-sample error. The best model is therefore a random forest model.
 
 
 ```r

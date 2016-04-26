@@ -175,7 +175,7 @@ rf_Model = train(classe~., data=pmltrain_clean, method=&quot;rf&quot;, trControl
 </div>
 <div id="validating-the-model" class="section level2">
 <h2>Validating the model</h2>
-<p>We perfom a cross validation and simultaneously estimate the out of sample error rate using the validation set that was previously created. We will use the accuracy of the validation set to select the best model.</p>
+<p>We perfom a validation and simultaneously estimate the out of sample error rate using the validation set that was previously created. We will use the accuracy of the validation set to select the best model.</p>
 <pre class="r"><code>rf_Results &lt;- predict(rf_Model,pmltrain_crossvalid)
 gbm_Results &lt;- predict(gbm_Model,pmltrain_crossvalid)
 lda_Results &lt;- predict(lda_Model,pmltrain_crossvalid)
@@ -189,7 +189,7 @@ c(rfAcc, gbmAcc, ldaAcc)</code></pre>
 <pre class="r"><code>outOfSampleError &lt;- 1-sum(rf_Results == pmltrain_crossvalid$classe)/length(rf_Results)
 outOfSampleError</code></pre>
 <pre><code>## [1] 0.004460872</code></pre>
-<p>The cross-validation accuracy for the random forest model is the largest: 99.554. The random forest model is of particular interest because it is not sensitive to the interactions between variables which are unknown in this case. They likely exist as all sensors are attached to one human body. It can also handle variables that are unscaled; we didn’t rescale the data because we didn’t the composition/distribution of the 54 remaining variables after cleaning the data. The out-of-sample error was calculated to be of 0.446%, which is simply 1-accurary for a random forest model as this model provide an unbiased estimate of the out-of-sample error. The best model is therefore a random forest model.</p>
+<p>The validation set accuracy for the random forest model is the largest: 99.554. The random forest model is of particular interest because it is not sensitive to the interactions between variables which are unknown in this case. They likely exist as all sensors are attached to one human body. It can also handle variables that are unscaled; we didn’t rescale the data because we didn’t know the composition/distribution of the 54 remaining variables after cleaning the data. In a more indepth study, interactionss and distribtion could be assessed. The out-of-sample error was calculated to be of 0.446%, which is simply 1-accurary for a random forest model as this model provide an unbiased estimate of the out-of-sample error. The best model is therefore a random forest model.</p>
 <pre class="r"><code>bestModel &lt;- rf_Model
 bestModel</code></pre>
 <pre><code>## Random Forest 

@@ -5,12 +5,12 @@ April 26, 2016
 
 
 ## Background
-Using personaldevices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, your goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website here: [linked phrase](http://groupware.les.inf.puc-rio.br/har) (see the section on the Weight Lifting Exercise Dataset).
+Using personaldevices such as Jawbone Up, Nike FuelBand, and Fitbit it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. One thing that people regularly do is quantify how much of a particular activity they do, but they rarely quantify how well they do it. In this project, your goal will be to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways. More information is available from the website here: [http://groupware.les.inf.puc-rio.br/har](http://groupware.les.inf.puc-rio.br/har) (see the section on the Weight Lifting Exercise Dataset).
 
 The goal of this project is to predict the manner in which participants did the exercise. This is the "classe" variable. The report describes how the data was clean and the model was built built, what cross validation was selected and expected out of sample error is. All decisions are explained.
 
 ## Loading data and libraries
-The data for this project come from [linked phrase](http://groupware.les.inf.puc-rio.br/har) and have been very generously provided by Velloso, E. et al. ("Qualitative Activity Recognition of Weight Lifting Exercises. Proceedings of 4th International Conference in Cooperation with SIGCHI (Augmented Human '13) . Stuttgart, Germany: ACM SIGCHI, 2013.) We load the data and ensure that all empty or '#DIV/0' cells are NA.
+The data for this project come from [http://groupware.les.inf.puc-rio.br/har](http://groupware.les.inf.puc-rio.br/har) and have been very generously provided by Velloso, E. et al. We load the data and ensure that all empty or '#DIV/0' cells are NA.
 
 
 ```r
@@ -116,7 +116,7 @@ outOfSampleError
 ## [1] 0.004460872
 ```
 
-The validation set accuracy for the random forest model is the largest: 99.554. The random forest model is of particular interest because it is not sensitive to the interactions between variables which are unknown in this case. They likely exist as all sensors are attached to one human body. It can also handle variables that are unscaled; we didn't rescale the data because we didn't know the composition/distribution of the 54 remaining variables after cleaning the data. In a more indepth study, interactionss and distribtion could be assessed. The out-of-sample error was calculated to be of 0.446%, which is simply 1-accurary for a random forest model as this model provide an unbiased estimate of the out-of-sample error. The best model is therefore a random forest model.
+The validation set accuracy for the random forest model is the largest: 99.554. The random forest model is of particular interest because it is not sensitive to the interactions between variables which are unknown in this case. They likely exist as all sensors are attached to one human body. It can also handle variables that are unscaled; we didn't rescale the data because we didn't know the composition/distribution of the 54 remaining variables after cleaning the data. In a more in-depth study, interactions and distributions could be assessed. The out-of-sample error was calculated to be of 0.446%, which is simply 1-accurary for a random forest model as this model provide an unbiased estimate of the out-of-sample error. The best model is therefore a random forest model.
 
 
 ```r
